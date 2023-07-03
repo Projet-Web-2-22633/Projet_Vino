@@ -59,12 +59,13 @@ class SAQService
         self::$_status = curl_getinfo($s, CURLINFO_HTTP_CODE);  /* POur avoir le status le code de statut, pour obtenir  des information sur la requête */
         curl_close($s); /* Fermer la session cURL  */
 
-
+	
         $doc = new DOMDocument();
         $doc->recover = true; // Va faire de son mieux pour corriger les erreurs, balises mal fermées, attributs manquants, des élément mal placés, etc. 
         $doc->strictErrorChecking = false;
         @$doc->loadHTML(self::$_webpage);
         $elements = $doc->getElementsByTagName('li');
+        // $i = 0;
 
         foreach ($elements as $key => $noeud) {
             if (strpos($noeud->getAttribute('class'), "product-item") !== false) {
@@ -115,7 +116,7 @@ class SAQService
         $country = Country::firstOrCreate(['name' => $countryName]);
         return $country->id;
     }
-
+    
     /**
     * @param $string Recoit une chaine 
     * @return string  retourne une chaine de caractère qui contient le millésime
@@ -131,6 +132,7 @@ class SAQService
             return null;
         }
     }
+    
 
     /**
      * 
